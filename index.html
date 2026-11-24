@@ -1,0 +1,1047 @@
+<!DOCTYPE html><html class="dark" lang="id"><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><title>HYDRO-EWS • Sistem Monitoring Banjir Telemetri Ultrasonic</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:#060e20;}::-webkit-scrollbar-thumb{background:#222a3d;border-radius:3px;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#93000a", "on-tertiary-container": "#6c000b", "surface-variant": "#2d3449", "tertiary-fixed-dim": "#ffb3ad", "outline-variant": "#584237", "primary": "#ffb690", "inverse-primary": "#9d4300", "on-primary": "#552100", "on-surface-variant": "#e0c0b1", "on-background": "#dae2fd", "on-secondary-container": "#00311f", "on-error": "#690005", "on-tertiary-fixed": "#410004", "surface-container-lowest": "#060e20", "tertiary": "#ffb3ad", "on-secondary": "#003824", "secondary-container": "#00a572", "on-primary-fixed-variant": "#783200", "error": "#ffb4ab", "on-secondary-fixed": "#002113", "surface-bright": "#31394d", "primary-fixed": "#ffdbca", "on-primary-container": "#582200", "surface-container": "#171f33", "primary-container": "#f97316", "inverse-on-surface": "#283044", "surface": "#0b1326", "outline": "#a78b7d", "surface-container-low": "#131b2e", "background": "#0b1326", "on-error-container": "#ffdad6", "primary-fixed-dim": "#ffb690", "surface-container-high": "#222a3d", "tertiary-fixed": "#ffdad7", "on-primary-fixed": "#341100", "surface-container-highest": "#2d3449", "tertiary-container": "#ff6a64", "on-tertiary": "#68000a", "on-tertiary-fixed-variant": "#930013", "surface-tint": "#ffb690", "inverse-surface": "#dae2fd", "secondary": "#4edea3", "on-secondary-fixed-variant": "#005236", "secondary-fixed": "#6ffbbe", "secondary-fixed-dim": "#4edea3", "surface-dim": "#0b1326", "on-surface": "#dae2fd" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "margin-lg": "2rem", "space-lg": "1.25rem", "space-xl": "2rem", "space-md": "0.75rem", "margin-md": "1.5rem", "space-xs": "0.25rem", "margin": "1rem", "gutter-lg": "1.5rem", "gutter": "1rem" }, "fontFamily": { "label-lg": [ "JetBrains Mono" ], "metric-display": [ "JetBrains Mono" ], "body-sm": [ "Hanken Grotesk" ], "body-lg": [ "Hanken Grotesk" ], "label-sm": [ "JetBrains Mono" ], "headline-lg": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "label-md": [ "JetBrains Mono" ], "body-md": [ "Hanken Grotesk" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "headline-xl-mobile": [ "Space Grotesk" ], "headline-xl": [ "Space Grotesk" ] } } } };</script></head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<div class="w-full">
+<!-- HEADER -->
+<header class="fixed top-0 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 flex items-center justify-between px-gutter-lg shadow-[0_1px_8px_rgba(0,0,0,0.1)] left-0 border-b border-surface-variant/30">
+  <div class="flex items-center gap-space-lg flex-wrap">
+    <div class="flex items-center gap-space-sm pr-space-md border-r border-surface-variant/30">
+      <div class="w-9 h-9 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm text-headline-sm font-bold shadow-[0_0_16px_-4px_rgba(249,115,22,0.3)]">
+        <span class="material-symbols-outlined text-[22px]">waves</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-headline-sm text-headline-sm leading-tight font-bold tracking-tight text-on-surface">HYDRO-EWS</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Ultrasonic Telemetry</span>
+      </div>
+    </div>
+    
+    <!-- Realtime Firebase Connection Pill -->
+    <div class="flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container border border-surface-variant/30">
+      <span class="material-symbols-outlined text-secondary text-[18px]" id="rtdb-icon">cloud_done</span>
+      <span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Firebase RTDB:</span>
+      <span class="font-label-sm text-label-sm font-bold text-secondary tracking-wide flex items-center gap-1.5" id="rtdb-status-text">
+        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse" id="rtdb-dot"></span>
+        <span id="rtdb-mode">CONNECTING</span>
+      </span>
+    </div>
+
+    <!-- POS Selector -->
+    <div class="flex items-center gap-space-xs bg-surface-container-high rounded px-space-sm py-space-xs border border-surface-variant/30">
+      <span class="material-symbols-outlined text-on-surface-variant text-[18px]">sensors</span>
+      <span class="font-label-sm text-label-sm text-on-surface-variant">POS:</span>
+      <select id="pos-selector" onchange="changePos()" class="bg-transparent text-on-surface font-label-md text-label-md outline-none cursor-pointer pr-space-sm">
+        <option class="bg-surface-container-high text-on-surface" value="POS-03">POS-03 - Jembatan Ciliwung Depok</option>
+        <option class="bg-surface-container-high text-on-surface" value="POS-01">POS-01 - Bendung Katulampa</option>
+        <option class="bg-surface-container-high text-on-surface" value="POS-02">POS-02 - Pintu Air Manggarai</option>
+        <option class="bg-surface-container-high text-on-surface" value="POS-04">POS-04 - Kali Angke Pesing</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-space-md">
+    <!-- EWS Siren Status Pill -->
+    <div id="siren-status-pill" class="flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container shadow-[0_0_16px_-4px_rgba(16,185,129,0.15)] transition-all">
+      <div id="siren-dot" class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Status Sirene EWS</span>
+        <span id="siren-status-label" class="font-label-md text-label-md font-bold text-secondary">SIAGA 4 / AMAN</span>
+      </div>
+    </div>
+
+    <button onclick="toggleAudioSiren()" class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors border border-surface-variant/30" title="Uji Coba Suara Sirene EWS">
+      <span class="material-symbols-outlined text-[20px]" id="siren-bell-icon">notifications</span>
+    </button>
+    <button onclick="manualSyncTrigger()" class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors border border-surface-variant/30" title="Sinkronkan Data RTDB Sekarang">
+      <span class="material-symbols-outlined text-[20px]" id="refresh-spin-icon">refresh</span>
+    </button>
+    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs font-mono font-bold text-xs text-on-primary">
+      E7
+    </div>
+  </div>
+</header>
+
+<main class="relative pt-20 w-full px-gutter-lg pb-margin-lg bg-surface">
+<div class="flex flex-col w-full gap-space-lg max-w-[1600px] mx-auto">
+
+  <!-- TOP CONTAINER: Data Realtime Sensor Ultrasonic (Hero Bento) -->
+  <section class="w-full bg-surface-container-low rounded-xl p-space-lg shadow-xl relative overflow-hidden border border-surface-variant/30">
+    <!-- Ambient status illumination glow -->
+    <div id="ambient-glow" class="absolute -top-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none transition-all duration-700"></div>
+    <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+
+    <!-- Header Strip -->
+    <div class="flex flex-wrap items-center justify-between gap-space-md pb-space-md border-b border-surface-variant/30 relative z-10">
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-sm flex-wrap">
+          <span id="hero-pulse-dot" class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_12px_rgba(78,222,163,0.9)] animate-pulse"></span>
+          <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-mono font-bold">TELEMETRI AKTIF • FIREBASE RTDB STREAM</span>
+          <span class="text-surface-variant hidden sm:inline">•</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">NODE: ESP32-ULTRASONIC-E7</span>
+        </div>
+        <h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">
+          Data Realtime Sensor Ultrasonic
+          <span id="pos-title-sub" class="text-on-surface-variant font-body-lg text-body-lg font-normal block sm:inline sm:ml-2">
+            — Pos Pantau Sungai Ciliwung (Jembatan Depok KM 34)
+          </span>
+        </h1>
+      </div>
+
+      <!-- Live RTDB Endpoint Pill -->
+      <div class="flex items-center gap-space-sm bg-surface-container px-space-md py-space-sm rounded border border-surface-variant/30">
+        <span class="material-symbols-outlined text-primary text-[18px]">database</span>
+        <div class="flex flex-col text-right">
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">RTDB Instance Path</span>
+          <span class="font-label-sm text-label-sm text-primary font-mono select-all font-semibold">/sensor_jarak/value</span>
+        </div>
+        <div class="w-2 h-2 rounded-full bg-secondary" id="rtdb-indicator-dot"></div>
+      </div>
+    </div>
+
+    <!-- Realtime Core Bento Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md pt-space-lg relative z-10">
+      <!-- Primary KPI: Ultrasonic Distance (Firebase sensor_jarak) -->
+      <div class="lg:col-span-4 bg-surface-container rounded-lg p-space-lg flex flex-col justify-between shadow-md relative overflow-hidden group border border-surface-variant/30">
+        <div class="flex items-start justify-between">
+          <div class="flex flex-col">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-mono">Jarak Sensor ke Muka Air</span>
+            <span class="font-body-sm text-body-sm text-outline">Realtime Ultrasonic Ping Echo (HC-SR04 / JSN-SR04T)</span>
+          </div>
+          <!-- Dynamic Status Badge -->
+          <div id="live-status-badge" class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-[#064E3B] text-[#34D399] border border-secondary/30">
+            <span id="badge-dot" class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+            <span id="badge-text" class="font-label-sm text-label-sm font-bold font-mono">STATUS: AMAN</span>
+          </div>
+        </div>
+
+        <!-- Big Metric Display -->
+        <div class="my-space-md">
+          <div class="flex items-baseline gap-space-xs">
+            <span class="font-metric-display text-metric-display font-bold text-on-surface tracking-tighter font-mono" id="live-distance">--.--</span>
+            <span class="font-headline-sm text-headline-sm text-primary font-bold">cm</span>
+          </div>
+          <div class="flex items-center gap-space-sm mt-1">
+            <span class="font-label-sm text-label-sm text-secondary flex items-center font-mono" id="delta-display">
+              <span class="material-symbols-outlined text-[16px]">trending_flat</span> 0.00 cm
+            </span>
+            <span class="text-surface-variant">•</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono" id="live-raw-condition">Kondisi: Menghubungkan...</span>
+          </div>
+        </div>
+
+        <!-- Water Cross Section Level Bar -->
+        <div class="flex flex-col gap-1.5 pt-space-sm">
+          <div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+            <span>Ambang Batas Siaga Banjir</span>
+            <span class="text-secondary font-mono font-bold" id="level-bar-label">Siaga 4 (Normal)</span>
+          </div>
+          <!-- Bar Track with Dynamic Pin -->
+          <div class="w-full h-3.5 bg-surface-container-lowest rounded-full overflow-hidden flex p-0.5 border border-surface-variant/40 relative">
+            <div class="h-full bg-error rounded-l-full w-[25%]" title="Bahaya: &lt;100 cm"></div>
+            <div class="h-full bg-primary-container w-[25%]" title="Waspada: 100-200 cm"></div>
+            <div class="h-full bg-secondary rounded-r-full w-[50%]" title="Aman: &gt;200 cm"></div>
+            <!-- Dynamic Pin -->
+            <div id="bar-pin" class="absolute top-0 bottom-0 w-2 bg-on-surface shadow-[0_0_8px_#ffffff] rounded-full transition-all duration-500 transform -translate-x-1" style="left: 10%;"></div>
+          </div>
+          <div class="flex justify-between font-label-sm text-[10px] text-outline font-mono">
+            <span>0 cm (Limpas)</span>
+            <span>100 cm (Bahaya)</span>
+            <span>200 cm (Waspada)</span>
+            <span>400 cm (Dasar)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Telemetry Array (5-col middle) -->
+      <div class="lg:col-span-5 grid grid-cols-2 gap-space-md">
+        <!-- TMA: Tinggi Muka Air -->
+        <div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between border border-surface-variant/30">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">TMA DARI DASAR</span>
+            <span class="material-symbols-outlined text-primary text-[20px]">height</span>
+          </div>
+          <div class="my-space-xs">
+            <span class="font-headline-lg text-headline-lg font-bold text-on-surface font-mono" id="tma-value">0.00</span>
+            <span class="font-label-md text-label-md text-on-surface-variant font-mono">cm</span>
+          </div>
+          <span class="font-label-sm text-label-sm text-secondary flex items-center font-mono" id="tma-elevation">
+            <span class="material-symbols-outlined text-[14px]">water_lux</span> Elevasi: 0.00 m
+          </span>
+        </div>
+
+        <!-- Debit Air -->
+        <div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between border border-surface-variant/30">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">ESTIMASI DEBIT</span>
+            <span class="material-symbols-outlined text-secondary text-[20px]">water</span>
+          </div>
+          <div class="my-space-xs">
+            <span class="font-headline-lg text-headline-lg font-bold text-on-surface font-mono" id="debit-value">0.00</span>
+            <span class="font-label-md text-label-md text-on-surface-variant font-mono">m³/detik</span>
+          </div>
+          <span class="font-label-sm text-label-sm text-on-surface-variant font-mono" id="flow-speed">Kecepatan: 0.35 m/s</span>
+        </div>
+
+        <!-- Curah Hujan -->
+        <div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between border border-surface-variant/30">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">CURAH HUJAN HULU</span>
+            <span class="material-symbols-outlined text-outline text-[20px]">rainy</span>
+          </div>
+          <div class="my-space-xs">
+            <span class="font-headline-lg text-headline-lg font-bold text-on-surface font-mono" id="rainfall-value">0.00</span>
+            <span class="font-label-md text-label-md text-on-surface-variant font-mono">mm/jam</span>
+          </div>
+          <span class="font-label-sm text-label-sm text-secondary font-mono" id="rainfall-status">Cerah / Tidak Hujan</span>
+        </div>
+
+        <!-- Delta vs History -->
+        <div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between border border-surface-variant/30">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">FLUKTUASI 1 JAM</span>
+            <span class="material-symbols-outlined text-primary text-[20px]">history_toggle_off</span>
+          </div>
+          <div class="my-space-xs">
+            <span class="font-headline-lg text-headline-lg font-bold text-secondary font-mono" id="fluctuation-value">0.00</span>
+            <span class="font-label-md text-label-md text-on-surface-variant font-mono">cm</span>
+          </div>
+          <span class="font-label-sm text-label-sm text-on-surface-variant font-mono" id="fluctuation-status">Tren: Stabil</span>
+        </div>
+      </div>
+
+      <!-- Node Hardware & Network Health (3-col right) -->
+      <div class="lg:col-span-3 bg-surface-container rounded-lg p-space-md flex flex-col justify-between border border-surface-variant/30">
+        <div class="flex items-center justify-between pb-space-xs border-b border-surface-variant/20">
+          <span class="font-label-sm text-label-sm uppercase text-on-surface font-bold font-mono">Diagnostik IoT Pos</span>
+          <span class="font-label-sm text-label-sm text-secondary font-mono font-bold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+            ONLINE
+          </span>
+        </div>
+        <div class="space-y-space-sm py-space-xs">
+          <!-- Solar Battery -->
+          <div>
+            <div class="flex justify-between text-label-sm font-label-sm mb-1 font-mono">
+              <span class="text-on-surface-variant flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px] text-secondary">solar_power</span> Solar LiFePO4
+              </span>
+              <span class="text-on-surface">98% (13.9V)</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+              <div class="h-full bg-secondary rounded-full w-[98%]"></div>
+            </div>
+          </div>
+          <!-- Signal RSSI -->
+          <div>
+            <div class="flex justify-between text-label-sm font-label-sm mb-1 font-mono">
+              <span class="text-on-surface-variant flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px] text-primary">cell_tower</span> 4G LTE Cat-M1
+              </span>
+              <span class="text-on-surface">-74 dBm (Kuat)</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+              <div class="h-full bg-primary rounded-full w-[82%]"></div>
+            </div>
+          </div>
+          <!-- RTDB Push Latency -->
+          <div class="p-space-xs rounded bg-surface-container-lowest flex items-center justify-between text-label-sm font-label-sm font-mono border border-surface-variant/20">
+            <span class="text-on-surface-variant">Last Push RTDB:</span>
+            <span class="text-secondary font-bold" id="last-ping-display">--:--:-- (75ms)</span>
+          </div>
+        </div>
+        <button class="w-full py-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm font-mono rounded flex items-center justify-center gap-1 transition-all border border-surface-variant/40" onclick="manualSyncTrigger()">
+          <span class="material-symbols-outlined text-[16px] text-primary" id="btn-sync-icon">sync</span>
+          SYNC ULTRASONIC PING
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CONTAINER: 2-Column Split matching Sketch -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg w-full">
+    <!-- LEFT COLUMN (7-col): Chart History Data (historyDataJarak) -->
+    <div class="lg:col-span-7 bg-surface-container-low rounded-xl p-space-lg shadow-xl flex flex-col justify-between border border-surface-variant/30">
+      <div>
+        <!-- Chart Top Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md">
+          <div>
+            <div class="flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
+              <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Chart History Data</h2>
+            </div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">
+              Firebase Path: /historyDataJarak [Sinkronisasi Realtime]
+            </span>
+          </div>
+          <!-- Filter Chips -->
+          <div class="flex items-center bg-surface-container rounded p-0.5 text-label-sm font-label-sm font-mono border border-surface-variant/30" id="chart-filter-chips">
+            <button onclick="setChartFilter('1h')" id="btn-filter-1h" class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">1 Jam</button>
+            <button onclick="setChartFilter('6h')" id="btn-filter-6h" class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">6 Jam</button>
+            <button onclick="setChartFilter('24h')" id="btn-filter-24h" class="px-space-sm py-1 rounded bg-surface-container-high text-primary font-bold shadow-sm">24 Jam</button>
+            <button onclick="setChartFilter('all')" id="btn-filter-all" class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors">Semua</button>
+          </div>
+        </div>
+
+        <!-- Quick Horizon Summary Stats -->
+        <div class="grid grid-cols-3 gap-space-sm mb-space-md">
+          <div class="bg-surface-container p-space-sm rounded flex flex-col border border-surface-variant/20">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono uppercase">JARAK TERENDAH (MAX TMA)</span>
+            <span class="font-headline-sm text-headline-sm font-mono font-bold text-error" id="stat-min-jarak">--.-- cm</span>
+            <span class="font-label-sm text-[10px] text-outline font-mono" id="stat-min-time">Sinkronisasi...</span>
+          </div>
+          <div class="bg-surface-container p-space-sm rounded flex flex-col border border-surface-variant/20">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono uppercase">JARAK TERTINGGI (SURUT)</span>
+            <span class="font-headline-sm text-headline-sm font-mono font-bold text-secondary" id="stat-max-jarak">--.-- cm</span>
+            <span class="font-label-sm text-[10px] text-outline font-mono" id="stat-max-time">Kondisi Aman</span>
+          </div>
+          <div class="bg-surface-container p-space-sm rounded flex flex-col border border-surface-variant/20">
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono uppercase">RATA-RATA HORIZON</span>
+            <span class="font-headline-sm text-headline-sm font-mono font-bold text-on-surface" id="stat-avg-jarak">--.-- cm</span>
+            <span class="font-label-sm text-[10px] text-secondary font-mono" id="stat-total-samples">0 Sampel Terbaca</span>
+          </div>
+        </div>
+
+        <!-- Interactive SVG Telemetry Elevation Chart -->
+        <div class="w-full bg-surface-container rounded-lg p-space-md relative overflow-hidden flex flex-col border border-surface-variant/30">
+          <!-- Legend Strip -->
+          <div class="flex items-center justify-between text-label-sm font-label-sm font-mono mb-2 flex-wrap gap-2">
+            <div class="flex items-center gap-space-md">
+              <span class="flex items-center gap-1.5 text-primary">
+                <span class="w-2.5 h-0.5 bg-primary"></span> Sensor Ultrasonic (cm)
+              </span>
+              <span class="flex items-center gap-1.5 text-primary-container">
+                <span class="w-2.5 h-0.5 bg-primary-container"></span> Waspada (200 cm)
+              </span>
+              <span class="flex items-center gap-1.5 text-error">
+                <span class="w-2.5 h-0.5 bg-error"></span> Bahaya (100 cm)
+              </span>
+            </div>
+            <span class="text-secondary flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span> Realtime Plotting
+            </span>
+          </div>
+
+          <!-- SVG Canvas Container -->
+          <div class="w-full h-56 relative" id="chart-svg-container">
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 640 220" id="telemetry-svg">
+              <defs>
+                <linearGradient id="jarakGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffb690" stop-opacity="0.35"></stop>
+                  <stop offset="60%" stop-color="#ffb690" stop-opacity="0.06"></stop>
+                  <stop offset="100%" stop-color="#ffb690" stop-opacity="0.0"></stop>
+                </linearGradient>
+              </defs>
+              <!-- Grid horizontal reference lines -->
+              <line stroke="#2d3449" stroke-dasharray="3,3" stroke-width="0.8" x1="40" x2="630" y1="20" y2="20"></line>
+              <line stroke="#ff6a64" stroke-dasharray="4,4" stroke-width="1.2" x1="40" x2="630" y1="62.5" y2="62.5" opacity="0.8"></line>
+              <line stroke="#f97316" stroke-dasharray="4,4" stroke-width="1.2" x1="40" x2="630" y1="105" y2="105" opacity="0.85"></line>
+              <line stroke="#2d3449" stroke-dasharray="3,3" stroke-width="0.8" x1="40" x2="630" y1="147.5" y2="147.5"></line>
+              <line stroke="#2d3449" stroke-dasharray="3,3" stroke-width="0.8" x1="40" x2="630" y1="190" y2="190"></line>
+              <!-- Y Axis Labels -->
+              <text fill="#a78b7d" font-family="JetBrains Mono" font-size="10" x="5" y="24">0 cm</text>
+              <text fill="#ffb4ab" font-family="JetBrains Mono" font-size="10" x="5" y="66">100cm</text>
+              <text fill="#f97316" font-family="JetBrains Mono" font-size="10" x="5" y="109">200cm</text>
+              <text fill="#a78b7d" font-family="JetBrains Mono" font-size="10" x="5" y="151">300cm</text>
+              <text fill="#a78b7d" font-family="JetBrains Mono" font-size="10" x="5" y="193">400cm</text>
+              
+              <!-- Dynamic elements rendered via JavaScript -->
+              <g id="svg-polygon-group"></g>
+              <g id="svg-polyline-group"></g>
+              <g id="svg-dots-group"></g>
+              <g id="svg-time-labels"></g>
+            </svg>
+            <div id="chart-tooltip" class="hidden absolute top-2 right-2 bg-surface-container-high/95 backdrop-blur border border-surface-variant px-3 py-1.5 rounded shadow-lg pointer-events-none font-mono text-xs"></div>
+          </div>
+
+          <div class="mt-2 pt-2 border-t border-surface-variant/20 flex items-center justify-between text-label-sm font-label-sm text-outline">
+            <span>* Catatan: Nilai jarak berbanding terbalik dengan muka air. Jarak makin kecil = air makin tinggi mendekati sensor.</span>
+            <span class="font-mono text-primary">Firebase Stream: LIVE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Realtime River CCTV & DAS Radar -->
+      <div class="mt-space-md grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+        <div class="relative rounded-lg overflow-hidden bg-surface-container h-32 border border-surface-variant/30">
+          <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdZ37GTTRsnnSe9AVamT-gj6XCdrd6tnTYejm-VmZbmbDasKV-ShqomqytaxQDT2Na9IFORZFXl_XrWI2TqctNucx4fvEB94TmP5u_yeEuqZzfWsy6EV6efArhVYGraouPm_jbtihafwQB31ndR2rEcDJOKG5YfRBQ0Q5RLF5RBSM9a3E2IFmkw7Ss4OClrsraFhRG0bYz2rYS3q11R-BGRkkWoTjaE90dMWAmwJg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+          <div class="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface/80 backdrop-blur font-mono text-label-sm text-secondary">
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> CAM-01 CILIWUNG HILIR
+          </div>
+          <div class="absolute bottom-2 left-2 font-mono text-[11px] text-on-surface">
+            IR Mode Active • Nilai Limpas: Normal
+          </div>
+        </div>
+
+        <div class="relative rounded-lg overflow-hidden bg-surface-container h-32 border border-surface-variant/30">
+          <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDzhNck-Iqk9WXd8fke1ye2ROqYW351UDH_3Y_Sxs5W_7GfyXW-3YDOuJiUjYEZcxdTHGnK9gChK3rknKi-7GlRSti2X60kGNVN95JyDSmiGwNAuRmPP2rDNa-aFJXOgQqBlCdnovFchiVKCQcbJu_Clv7mLI-YuSHoC1XtLf3iBzfpnfWwoGhWBZdD9aaaTB_3GLeJ8widLWnzppLbow6syr_uHxywAodEjQzgVM');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+          <div class="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface/80 backdrop-blur font-mono text-label-sm text-primary">
+            <span class="material-symbols-outlined text-[14px]">satellite_alt</span> RADAR DAS CILIWUNG
+          </div>
+          <div class="absolute bottom-2 left-2 font-mono text-[11px] text-on-surface">
+            Kecepatan Aliran Hulu: 0.6 m/s (Katulampa Siaga 4)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (5-col): Table History Data (Log Telemetri RTDB) -->
+    <div class="lg:col-span-5 bg-surface-container-low rounded-xl p-space-lg shadow-xl flex flex-col justify-between border border-surface-variant/30">
+      <div>
+        <div class="flex items-center justify-between pb-space-sm border-b border-surface-variant/30">
+          <div>
+            <div class="flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-secondary text-[20px]">table_rows</span>
+              <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Table History Data</h2>
+            </div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">
+              Mapping Push Keys: <code class="text-primary font-mono">-P65...</code> (RTDB)
+            </span>
+          </div>
+          <div class="flex items-center gap-space-xs">
+            <button class="p-1.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors border border-surface-variant/30" onclick="copyRtdbEndpoint()" title="Salin URL Firebase RTDB">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+            <button class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface hover:bg-surface-bright text-label-sm font-label-sm font-mono flex items-center gap-1 border border-surface-variant/40 transition-all" onclick="exportCSVLog()">
+              <span class="material-symbols-outlined text-[16px]">download</span> CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Filter bar -->
+        <div class="mt-space-md mb-space-sm flex items-center gap-space-xs">
+          <div class="relative flex-1">
+            <span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[16px]">search</span>
+            <input class="w-full bg-surface-container text-on-surface placeholder:text-outline text-label-sm font-label-sm pl-8 pr-3 py-1.5 rounded outline-none focus:ring-1 focus:ring-primary font-mono border border-surface-variant/30" id="search-push-key" onkeyup="filterTableRows()" placeholder="Cari Push Key RTDB / Waktu..." type="text">
+          </div>
+          <select id="status-filter-select" onchange="filterTableRows()" class="bg-surface-container text-on-surface text-label-sm font-label-sm px-2 py-1.5 rounded outline-none font-mono cursor-pointer border border-surface-variant/30">
+            <option value="ALL">Semua Status</option>
+            <option value="AMAN">Aman</option>
+            <option value="WASPADA">Waspada</option>
+            <option value="BAHAYA">Bahaya</option>
+            <option value="DI LUAR JANGKAUAN">Di Luar Jangkauan</option>
+          </select>
+        </div>
+
+        <!-- High-Density Telemetry Table -->
+        <div class="w-full overflow-x-auto rounded bg-surface-container-lowest border border-surface-variant/30 max-h-[380px]">
+          <table class="w-full text-left border-collapse" id="telemetry-table">
+            <thead class="sticky top-0 z-10">
+              <tr class="bg-surface-container text-label-sm font-label-sm text-outline border-b border-surface-variant/30">
+                <th class="py-2.5 px-3 font-mono font-normal">FIREBASE KEY / TIMESTAMP</th>
+                <th class="py-2.5 px-3 font-mono font-normal text-right">JARAK SENSOR</th>
+                <th class="py-2.5 px-3 font-mono font-normal text-center">KONDISI</th>
+                <th class="py-2.5 px-3 font-mono font-normal text-right">STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="telemetry-tbody" class="divide-y divide-surface-variant/10 text-body-sm font-body-sm font-mono">
+              <tr>
+                <td colspan="4" class="py-8 text-center text-on-surface-variant font-mono">
+                  Menghubungkan ke Firebase Realtime Database...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Raw RTDB JSON Toggle Drawer & Table Footer -->
+      <div class="mt-space-md pt-space-sm border-t border-surface-variant/20 flex flex-col gap-space-sm">
+        <div class="flex items-center justify-between text-label-sm font-label-sm">
+          <span class="text-outline font-mono" id="total-entries-label">Total Entri RTDB: 0 push events</span>
+          <button class="text-primary hover:underline flex items-center gap-1 font-mono" onclick="toggleRawJson()">
+            <span class="material-symbols-outlined text-[16px]">data_object</span>
+            <span id="json-toggle-label">Buka Raw JSON RTDB</span>
+          </button>
+        </div>
+        <!-- Collapsible Raw JSON Container -->
+        <div class="hidden bg-surface-container-lowest p-space-sm rounded font-mono text-[11px] text-on-surface-variant overflow-x-auto max-h-48 border border-surface-variant/20" id="raw-json-panel">
+          <pre id="raw-json-code">// Menunggu data Firebase...</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Operational Dispatch / Incident Trigger Bar -->
+  <section class="w-full bg-surface-container rounded-xl p-space-md flex flex-wrap items-center justify-between gap-space-md border border-surface-variant/30">
+    <div class="flex items-center gap-space-md">
+      <div class="w-10 h-10 rounded bg-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/30">
+        <span class="material-symbols-outlined text-[24px]">notifications_active</span>
+      </div>
+      <div>
+        <h4 class="font-headline-sm text-headline-sm font-bold text-on-surface">Protokol Diseminasi EWS &amp; Sirene Darurat</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Sirene Pos Katulampa &amp; Manggarai terhubung otomatis ke Firebase RTDB saat ambang jarak &lt; 100 cm.</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-space-sm flex-wrap">
+      <button id="btn-audio-siren" onclick="toggleAudioSiren()" class="px-space-md py-space-sm rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-sm font-label-sm font-mono flex items-center gap-1.5 transition-colors border border-surface-variant/40">
+        <span class="material-symbols-outlined text-[16px] text-primary" id="btn-siren-icon">campaign</span>
+        <span id="btn-siren-text">TEST AUDIO SIRENE POS</span>
+      </button>
+      <button onclick="broadcastAlertBPBD()" class="px-space-md py-space-sm rounded bg-primary text-on-primary font-bold text-label-sm font-label-sm uppercase tracking-wider font-mono hover:opacity-90 shadow-md flex items-center gap-1.5 transition-all">
+        <span class="material-symbols-outlined text-[18px]">send</span> BROADCAST ALERT BPBD
+      </button>
+    </div>
+  </section>
+</div>
+</main>
+
+<!-- JAVASCRIPT: Realtime Firebase RTDB, Audio Siren, SVG Chart, & Table -->
+<script>
+  // 1. Firebase RTDB Configuration
+  const FIREBASE_HOST = "https://project-despro-2-default-rtdb.asia-southeast1.firebasedatabase.app/";
+  const FIREBASE_AUTH = "stZoWOUZBi8XcGGwSW2HfY6KYxPGWAy7iqrHHLkr";
+  const PUSH_CHARS = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+
+  let telemetryRecords = [];
+  let currentRawData = null;
+  let chartFilter = '24h';
+  let eventSource = null;
+  let pollInterval = null;
+
+  // 2. Decode Firebase Push ID to Exact Millisecond Timestamp
+  function decodePushIdTimestamp(id) {
+    if (!id || typeof id !== 'string' || id.length < 8) return new Date();
+    let time = 0;
+    for (let i = 0; i < 8; i++) {
+      const c = id.charAt(i);
+      const val = PUSH_CHARS.indexOf(c);
+      if (val === -1) return new Date();
+      time = (time * 64) + val;
+    }
+    const d = new Date(time);
+    if (isNaN(d.getTime()) || time < 1577836800000 || time > 2000000000000) {
+      return new Date();
+    }
+    return d;
+  }
+
+  // 3. Status Evaluation
+  function evaluateAlertStatus(distance, conditionText) {
+    const cond = (conditionText || '').toLowerCase();
+    if (cond.includes('luar jangkauan') || cond.includes('out of range') || distance > 400 || distance <= 0) {
+      return 'DI LUAR JANGKAUAN';
+    }
+    if (cond.includes('bahaya') || distance < 100) {
+      return 'BAHAYA';
+    }
+    if (cond.includes('waspada') || (distance >= 100 && distance <= 200)) {
+      return 'WASPADA';
+    }
+    return 'AMAN';
+  }
+
+  // 4. Parse History Entry
+  function parseHistoryItem(key, val) {
+    let distance = 0;
+    let condition = '';
+    if (typeof val === 'number') {
+      distance = val;
+    } else if (typeof val === 'string') {
+      const num = parseFloat(val);
+      if (!isNaN(num)) distance = num;
+      else condition = val;
+    } else if (typeof val === 'object' && val !== null) {
+      distance = Number(val.value ?? val.jarak ?? val.distance ?? val.data ?? 0);
+      condition = String(val.condition ?? val.kondisi ?? val.status ?? '');
+    }
+
+    const timestamp = decodePushIdTimestamp(key);
+    const status = evaluateAlertStatus(distance, condition);
+    if (!condition) {
+      condition = status === 'DI LUAR JANGKAUAN' ? 'Di Luar Jangkauan' : status === 'BAHAYA' ? 'Bahaya' : status === 'WASPADA' ? 'Waspada' : 'Aman';
+    }
+
+    return {
+      key,
+      distance: Number(distance.toFixed(2)),
+      condition,
+      status,
+      timestamp,
+      timeStr: timestamp.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }),
+      dateStr: timestamp.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }),
+      raw: val
+    };
+  }
+
+  // 5. Fetch RTDB REST API
+  async function fetchRTDB() {
+    const t0 = performance.now();
+    try {
+      const url = `${FIREBASE_HOST}.json?auth=${FIREBASE_AUTH}`;
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const latency = Math.round(performance.now() - t0);
+      applyFirebaseData(data, latency);
+      setConnectionMode('STREAMING', true);
+    } catch (err) {
+      console.warn('Firebase RTDB fetch error:', err);
+      setConnectionMode('POLLING', false);
+    }
+  }
+
+  // 6. Apply Received Firebase Payload to UI
+  function applyFirebaseData(data, latencyMs = 75) {
+    if (!data) return;
+    currentRawData = data;
+
+    // Update Raw JSON panel
+    document.getElementById('raw-json-code').innerText = JSON.stringify(data, null, 2);
+
+    // Update Ping latency
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('last-ping-display').innerText = `${timeStr} (${latencyMs}ms)`;
+
+    // Process sensor_jarak
+    let liveDistance = 403.56;
+    let liveCondition = 'Di Luar Jangkauan';
+
+    if (data.sensor_jarak) {
+      liveDistance = Number(data.sensor_jarak.value ?? data.sensor_jarak.jarak ?? 0);
+      liveCondition = String(data.sensor_jarak.condition ?? data.sensor_jarak.kondisi ?? 'Aman');
+    }
+
+    // Process historyDataJarak
+    telemetryRecords = [];
+    if (data.historyDataJarak && typeof data.historyDataJarak === 'object') {
+      for (const [k, v] of Object.entries(data.historyDataJarak)) {
+        telemetryRecords.push(parseHistoryItem(k, v));
+      }
+      telemetryRecords.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    }
+
+    // If sensor_jarak empty, infer from newest history record
+    if (!data.sensor_jarak && telemetryRecords.length > 0) {
+      liveDistance = telemetryRecords[0].distance;
+      liveCondition = telemetryRecords[0].condition;
+    }
+
+    const liveStatus = evaluateAlertStatus(liveDistance, liveCondition);
+
+    // Update Top Metric Display
+    const distElem = document.getElementById('live-distance');
+    distElem.innerText = liveDistance > 400 ? '> 400' : liveDistance.toFixed(2);
+    document.getElementById('live-raw-condition').innerText = `Kondisi: ${liveCondition}`;
+
+    // Update Status Badge & Ambient Glow
+    updateStatusVisuals(liveStatus, liveDistance, liveCondition);
+
+    // Calculate TMA (400 - distance)
+    const tma = liveDistance > 400 ? 0 : Math.max(0, 400 - liveDistance);
+    document.getElementById('tma-value').innerText = tma.toFixed(2);
+    document.getElementById('tma-elevation').innerHTML = `<span class="material-symbols-outlined text-[14px]">water_lux</span> Elevasi: ${(tma/100).toFixed(2)} m`;
+
+    // Estimate Debit & Flow
+    const debit = tma > 0 ? (0.5 + tma * 0.015).toFixed(2) : "0.00";
+    document.getElementById('debit-value').innerText = debit;
+    document.getElementById('flow-speed').innerText = `Kecepatan: ${(0.25 + parseFloat(debit) * 0.1).toFixed(2)} m/s`;
+
+    // Calculate Fluctuation (delta between newest and older history)
+    if (telemetryRecords.length >= 2) {
+      const delta = (telemetryRecords[0].distance - telemetryRecords[telemetryRecords.length - 1].distance).toFixed(2);
+      const flucElem = document.getElementById('fluctuation-value');
+      flucElem.innerText = (delta >= 0 ? `+${delta}` : delta);
+      flucElem.className = `font-headline-lg text-headline-lg font-bold font-mono ${delta >= 0 ? 'text-secondary' : 'text-error'}`;
+      document.getElementById('fluctuation-status').innerText = delta >= 0 ? 'Tren: Surut / Stabil' : 'Tren: Muka air naik';
+
+      document.getElementById('delta-display').innerHTML = delta >= 0 
+        ? `<span class="material-symbols-outlined text-[16px]">arrow_downward</span> -${Math.abs(delta)} cm` 
+        : `<span class="material-symbols-outlined text-[16px]">arrow_upward</span> +${Math.abs(delta)} cm`;
+    }
+
+    // Render Table and SVG Chart
+    renderTable();
+    renderChart();
+  }
+
+  // 7. Update Status Badges & Glow
+  function updateStatusVisuals(status, distance, condition) {
+    const badge = document.getElementById('live-status-badge');
+    const badgeDot = document.getElementById('badge-dot');
+    const badgeText = document.getElementById('badge-text');
+    const sirenLabel = document.getElementById('siren-status-label');
+    const sirenDot = document.getElementById('siren-dot');
+    const sirenPill = document.getElementById('siren-status-pill');
+    const levelBarLabel = document.getElementById('level-bar-label');
+    const barPin = document.getElementById('bar-pin');
+    const ambientGlow = document.getElementById('ambient-glow');
+
+    // Pin position on 0..400 scale (distance 0 = 100% full, distance 400 = 0% full)
+    const pinPercent = Math.max(2, Math.min(98, 100 - (distance / 400) * 100));
+    barPin.style.left = `${pinPercent}%`;
+
+    if (status === 'BAHAYA') {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 rounded bg-[#7F1D1D] text-[#F87171] border border-error/50';
+      badgeDot.className = 'w-2 h-2 rounded-full bg-error animate-ping';
+      badgeText.innerText = 'STATUS: BAHAYA';
+      sirenLabel.innerText = 'SIAGA 1 / BAHAYA';
+      sirenLabel.className = 'font-label-md text-label-md font-bold text-error';
+      sirenDot.className = 'w-2 h-2 rounded-full bg-error animate-ping';
+      sirenPill.className = 'flex items-center gap-space-sm px-space-md py-space-xs rounded bg-error-container/40 shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all';
+      levelBarLabel.innerText = 'Siaga 1 (Bahaya)';
+      levelBarLabel.className = 'text-error font-mono font-bold';
+      ambientGlow.className = 'absolute -top-24 -right-24 w-96 h-96 bg-error/20 rounded-full blur-3xl pointer-events-none transition-all duration-700';
+    } else if (status === 'WASPADA') {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 rounded bg-[#7C2D12] text-[#FB923C] border border-primary-container/50';
+      badgeDot.className = 'w-2 h-2 rounded-full bg-primary-container animate-pulse';
+      badgeText.innerText = 'STATUS: WASPADA';
+      sirenLabel.innerText = 'SIAGA 2 / WASPADA';
+      sirenLabel.className = 'font-label-md text-label-md font-bold text-primary-container';
+      sirenDot.className = 'w-2 h-2 rounded-full bg-primary-container animate-pulse';
+      sirenPill.className = 'flex items-center gap-space-sm px-space-md py-space-xs rounded bg-primary-container/20 shadow-[0_0_16px_rgba(249,115,22,0.3)] transition-all';
+      levelBarLabel.innerText = 'Siaga 2 (Waspada)';
+      levelBarLabel.className = 'text-primary-container font-mono font-bold';
+      ambientGlow.className = 'absolute -top-24 -right-24 w-96 h-96 bg-primary-container/15 rounded-full blur-3xl pointer-events-none transition-all duration-700';
+    } else if (status === 'DI LUAR JANGKAUAN') {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant border border-surface-variant/40';
+      badgeDot.className = 'w-2 h-2 rounded-full bg-outline';
+      badgeText.innerText = 'DI LUAR JANGKAUAN';
+      sirenLabel.innerText = 'DI LUAR JANGKAUAN';
+      sirenLabel.className = 'font-label-md text-label-md font-bold text-on-surface-variant';
+      sirenDot.className = 'w-2 h-2 rounded-full bg-outline';
+      sirenPill.className = 'flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container transition-all';
+      levelBarLabel.innerText = 'Di Luar Jangkauan';
+      levelBarLabel.className = 'text-outline font-mono';
+      ambientGlow.className = 'absolute -top-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none transition-all duration-700';
+    } else {
+      badge.className = 'flex items-center gap-1.5 px-space-sm py-1 rounded bg-[#064E3B] text-[#34D399] border border-secondary/30';
+      badgeDot.className = 'w-2 h-2 rounded-full bg-secondary animate-ping';
+      badgeText.innerText = 'STATUS: AMAN';
+      sirenLabel.innerText = 'SIAGA 4 / AMAN';
+      sirenLabel.className = 'font-label-md text-label-md font-bold text-secondary';
+      sirenDot.className = 'w-2 h-2 rounded-full bg-secondary animate-pulse';
+      sirenPill.className = 'flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container shadow-[0_0_16px_-4px_rgba(16,185,129,0.15)] transition-all';
+      levelBarLabel.innerText = 'Siaga 4 (Normal)';
+      levelBarLabel.className = 'text-secondary font-mono font-bold';
+      ambientGlow.className = 'absolute -top-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none transition-all duration-700';
+    }
+  }
+
+  // 8. Render High-Density Table
+  function renderTable() {
+    const tbody = document.getElementById('telemetry-tbody');
+    const searchVal = document.getElementById('search-push-key').value.toLowerCase();
+    const filterStatus = document.getElementById('status-filter-select').value;
+
+    const filtered = telemetryRecords.filter(item => {
+      const matchSearch = item.key.toLowerCase().includes(searchVal) ||
+                          item.timeStr.includes(searchVal) ||
+                          item.dateStr.toLowerCase().includes(searchVal) ||
+                          item.condition.toLowerCase().includes(searchVal) ||
+                          item.distance.toString().includes(searchVal);
+      const matchStatus = filterStatus === 'ALL' ? true : item.status === filterStatus;
+      return matchSearch && matchStatus;
+    });
+
+    document.getElementById('total-entries-label').innerText = `Total Entri RTDB: ${telemetryRecords.length} push events`;
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-on-surface-variant font-mono">Tidak ada baris yang sesuai dengan pencarian/filter.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map((row, idx) => {
+      const isBahaya = row.status === 'BAHAYA';
+      const isWaspada = row.status === 'WASPADA';
+      const isOut = row.status === 'DI LUAR JANGKAUAN';
+
+      const chipClass = isBahaya ? 'bg-[#7F1D1D] text-[#F87171]' :
+                        isWaspada ? 'bg-[#7C2D12] text-[#FB923C]' :
+                        isOut ? 'bg-surface-container-high text-on-surface-variant' :
+                        'bg-[#064E3B] text-[#34D399]';
+
+      const statusColor = isBahaya ? 'text-error font-bold' :
+                          isWaspada ? 'text-primary-container font-bold' :
+                          isOut ? 'text-outline' :
+                          'text-secondary font-bold';
+
+      const dotColor = isBahaya ? 'bg-error' : isWaspada ? 'bg-primary-container' : isOut ? 'bg-outline' : 'bg-secondary';
+      const statusText = isBahaya ? 'ALERT' : isWaspada ? 'WASPADA' : isOut ? 'RANGE' : 'OK';
+
+      return `
+        <tr class="hover:bg-surface-container transition-colors group ${idx % 2 === 1 ? 'bg-surface-container/20' : ''}">
+          <td class="py-2.5 px-3">
+            <div class="flex flex-col">
+              <span class="text-primary font-bold text-label-sm tracking-tight truncate max-w-[140px] font-mono group-hover:text-primary-fixed" title="${row.key}">
+                ${row.key}
+              </span>
+              <span class="text-outline text-[10px]">${row.dateStr} • ${row.timeStr} WIB</span>
+            </div>
+          </td>
+          <td class="py-2.5 px-3 text-right">
+            <span class="font-bold text-on-surface text-label-md">${row.distance > 400 ? '> 400' : row.distance.toFixed(2)}</span>
+            <span class="text-outline text-label-sm ml-0.5">cm</span>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${chipClass}">
+              ${row.condition}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 text-right">
+            <span class="${statusColor} text-label-sm font-mono flex items-center justify-end gap-1">
+              <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>${statusText}
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function filterTableRows() {
+    renderTable();
+  }
+
+  // 9. Render Interactive SVG Chart
+  function setChartFilter(filter) {
+    chartFilter = filter;
+    ['1h', '6h', '24h', 'all'].forEach(f => {
+      const btn = document.getElementById(`btn-filter-${f}`);
+      if (f === filter) {
+        btn.className = 'px-space-sm py-1 rounded bg-surface-container-high text-primary font-bold shadow-sm';
+      } else {
+        btn.className = 'px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors';
+      }
+    });
+    renderChart();
+  }
+
+  function renderChart() {
+    if (telemetryRecords.length === 0) return;
+
+    const now = new Date().getTime();
+    let data = [...telemetryRecords];
+
+    if (chartFilter === '1h') data = data.filter(d => d.timestamp.getTime() >= now - 3600000);
+    else if (chartFilter === '6h') data = data.filter(d => d.timestamp.getTime() >= now - 6 * 3600000);
+    else if (chartFilter === '24h') data = data.filter(d => d.timestamp.getTime() >= now - 24 * 3600000);
+
+    if (data.length === 0) data = [...telemetryRecords];
+
+    // Chronological order (oldest to newest)
+    const points = [...data].reverse();
+
+    // Summary stats
+    const distList = points.map(p => p.distance);
+    const minD = Math.min(...distList);
+    const maxD = Math.max(...distList);
+    const avgD = (distList.reduce((a, b) => a + b, 0) / distList.length).toFixed(1);
+
+    document.getElementById('stat-min-jarak').innerText = minD > 400 ? '> 400 cm' : `${minD.toFixed(1)} cm`;
+    document.getElementById('stat-max-jarak').innerText = maxD > 400 ? '> 400 cm' : `${maxD.toFixed(1)} cm`;
+    document.getElementById('stat-avg-jarak').innerText = avgD > 400 ? '> 400 cm' : `${avgD} cm`;
+    document.getElementById('stat-total-samples').innerText = `${points.length} Sampel Terbaca`;
+
+    // Coordinates mapping (0cm -> y=20, 400cm -> y=190)
+    const xStart = 50;
+    const xEnd = 620;
+    const mapY = (dist) => 20 + (Math.max(0, Math.min(400, dist)) / 400) * 170;
+
+    const coords = points.map((p, i) => {
+      const x = points.length === 1 ? (xStart + xEnd) / 2 : xStart + (i / (points.length - 1)) * (xEnd - xStart);
+      const y = mapY(p.distance);
+      return { x, y, item: p };
+    });
+
+    const polylineStr = coords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+    const polygonStr = `${coords[0].x.toFixed(1)},195 ${polylineStr} ${coords[coords.length - 1].x.toFixed(1)},195`;
+
+    document.getElementById('svg-polygon-group').innerHTML = `<polygon fill="url(#jarakGradient)" points="${polygonStr}"></polygon>`;
+    document.getElementById('svg-polyline-group').innerHTML = `<polyline fill="none" points="${polylineStr}" stroke="#ffb690" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></polyline>`;
+
+    // Render dots
+    document.getElementById('svg-dots-group').innerHTML = coords.map((c, i) => {
+      const isLatest = i === coords.length - 1;
+      const color = c.item.status === 'BAHAYA' ? '#ff6a64' : c.item.status === 'WASPADA' ? '#f97316' : '#4edea3';
+      return `<circle cx="${c.x}" cy="${c.y}" r="${isLatest ? 5.5 : 3.5}" fill="${color}" stroke="#0b1326" stroke-width="2" class="cursor-pointer hover:r-6 transition-all" data-idx="${i}"></circle>`;
+    }).join('');
+
+    // Time labels
+    let timeHtml = `<text fill="#a78b7d" font-family="JetBrains Mono" font-size="10" x="${coords[0].x}" y="212">${coords[0].item.timeStr}</text>`;
+    if (coords.length > 2) {
+      const mid = coords[Math.floor(coords.length / 2)];
+      timeHtml += `<text fill="#a78b7d" font-family="JetBrains Mono" font-size="10" x="${mid.x - 20}" y="212">${mid.item.timeStr}</text>`;
+    }
+    const last = coords[coords.length - 1];
+    timeHtml += `<text fill="#4edea3" font-family="JetBrains Mono" font-size="10" font-weight="bold" x="${last.x - 30}" y="212">${last.item.timeStr}</text>`;
+    document.getElementById('svg-time-labels').innerHTML = timeHtml;
+  }
+
+  // 10. Web Audio API Siren Synthesizer
+  let sirenContext = null;
+  let sirenOsc1 = null;
+  let sirenOsc2 = null;
+  let sirenLfo = null;
+  let isSirenActive = false;
+
+  function toggleAudioSiren() {
+    const btnText = document.getElementById('btn-siren-text');
+    const btnIcon = document.getElementById('btn-siren-icon');
+    const btn = document.getElementById('btn-audio-siren');
+
+    if (isSirenActive) {
+      // Stop siren
+      try {
+        sirenOsc1?.stop();
+        sirenOsc2?.stop();
+        sirenLfo?.stop();
+        sirenContext?.close();
+      } catch (e) {}
+      isSirenActive = false;
+      btnText.innerText = 'TEST AUDIO SIRENE POS';
+      btnIcon.innerText = 'campaign';
+      btn.className = 'px-space-md py-space-sm rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-sm font-label-sm font-mono flex items-center gap-1.5 transition-colors border border-surface-variant/40';
+    } else {
+      // Start siren
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        sirenContext = new AudioCtx();
+
+        const gainNode = sirenContext.createGain();
+        gainNode.gain.setValueAtTime(0.2, sirenContext.currentTime);
+        gainNode.connect(sirenContext.destination);
+
+        sirenOsc1 = sirenContext.createOscillator();
+        sirenOsc1.type = 'sawtooth';
+        sirenOsc1.frequency.setValueAtTime(700, sirenContext.currentTime);
+
+        sirenOsc2 = sirenContext.createOscillator();
+        sirenOsc2.type = 'sine';
+        sirenOsc2.frequency.setValueAtTime(700, sirenContext.currentTime);
+
+        sirenLfo = sirenContext.createOscillator();
+        sirenLfo.type = 'sine';
+        sirenLfo.frequency.setValueAtTime(0.5, sirenContext.currentTime);
+
+        const lfoGain = sirenContext.createGain();
+        lfoGain.gain.setValueAtTime(250, sirenContext.currentTime);
+
+        sirenLfo.connect(lfoGain);
+        lfoGain.connect(sirenOsc1.frequency);
+        lfoGain.connect(sirenOsc2.frequency);
+
+        sirenOsc1.connect(gainNode);
+        sirenOsc2.connect(gainNode);
+
+        sirenOsc1.start();
+        sirenOsc2.start();
+        sirenLfo.start();
+
+        isSirenActive = true;
+        btnText.innerText = 'STOP SIRENE EWS';
+        btnIcon.innerText = 'volume_off';
+        btn.className = 'px-space-md py-space-sm rounded bg-error text-on-error font-bold text-label-sm font-label-sm font-mono flex items-center gap-1.5 transition-colors border border-error animate-pulse';
+      } catch (err) {
+        alert('Web Audio API tidak didukung di browser ini.');
+      }
+    }
+  }
+
+  // 11. Broadcast Alert Simulation
+  function broadcastAlertBPBD() {
+    alert('🚨 BROADCAST ALERT TILL BPBD / SAR:\n\nNotifikasi peringatan dini banjir berhasil dikirimkan ke Command Center BPBD dan pos siaga terdekat via Webhook Firebase Cloud Functions.');
+  }
+
+  // 12. Manual Sync Trigger
+  function manualSyncTrigger() {
+    const icon = document.getElementById('refresh-spin-icon');
+    const btnIcon = document.getElementById('btn-sync-icon');
+    icon.classList.add('animate-spin');
+    btnIcon.classList.add('animate-spin');
+    fetchRTDB().finally(() => {
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        btnIcon.classList.remove('animate-spin');
+      }, 400);
+    });
+  }
+
+  // 13. Copy RTDB Endpoint
+  function copyRtdbEndpoint() {
+    navigator.clipboard.writeText(FIREBASE_HOST).then(() => {
+      alert(`URL Firebase RTDB disalin ke clipboard:\n${FIREBASE_HOST}`);
+    });
+  }
+
+  // 14. Export CSV
+  function exportCSVLog() {
+    if (telemetryRecords.length === 0) {
+      alert('Belum ada data telemetri yang tersedia untuk diekspor.');
+      return;
+    }
+    const headers = "PushKey,Timestamp_ISO,Waktu_WIB,Tanggal_WIB,Jarak_cm,Kondisi,Status_EWS\n";
+    const rows = telemetryRecords.map(r => 
+      `${r.key},${r.timestamp.toISOString()},${r.timeStr},${r.dateStr},${r.distance},"${r.condition}",${r.status}`
+    ).join("\n");
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `telemetri_banjir_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // 15. Toggle Raw JSON Panel
+  function toggleRawJson() {
+    const panel = document.getElementById('raw-json-panel');
+    const label = document.getElementById('json-toggle-label');
+    if (panel.classList.contains('hidden')) {
+      panel.classList.remove('hidden');
+      label.innerText = 'Tutup Raw JSON RTDB';
+    } else {
+      panel.classList.add('hidden');
+      label.innerText = 'Buka Raw JSON RTDB';
+    }
+  }
+
+  // 16. POS Selector Change
+  function changePos() {
+    const sel = document.getElementById('pos-selector');
+    const sub = document.getElementById('pos-title-sub');
+    const text = sel.options[sel.selectedIndex].text;
+    sub.innerText = `— Pos Pantau ${text.split(' - ')[1]}`;
+  }
+
+  function setConnectionMode(mode, isOk) {
+    document.getElementById('rtdb-mode').innerText = mode;
+    document.getElementById('rtdb-dot').className = `w-2 h-2 rounded-full ${isOk ? 'bg-secondary animate-pulse' : 'bg-outline'}`;
+    document.getElementById('rtdb-status-text').className = `font-label-sm text-label-sm font-bold tracking-wide flex items-center gap-1.5 ${isOk ? 'text-secondary' : 'text-outline'}`;
+  }
+
+  // 17. Initialize Connection (Initial Fetch + SSE + 2.5s Polling fallback)
+  window.addEventListener('DOMContentLoaded', () => {
+    fetchRTDB();
+
+    // Start SSE stream
+    try {
+      eventSource = new EventSource(`${FIREBASE_HOST}.json?auth=${FIREBASE_AUTH}`);
+      eventSource.addEventListener('put', (e) => {
+        try {
+          const parsed = JSON.parse(e.data);
+          if (parsed && parsed.data) {
+            applyFirebaseData(parsed.data, 45);
+            setConnectionMode('STREAMING', true);
+          }
+        } catch (err) {}
+      });
+      eventSource.addEventListener('patch', (e) => {
+        fetchRTDB();
+      });
+      eventSource.onopen = () => setConnectionMode('STREAMING', true);
+      eventSource.onerror = () => {
+        setConnectionMode('POLLING', true);
+        eventSource.close();
+      };
+    } catch (e) {
+      setConnectionMode('POLLING', true);
+    }
+
+    // Polling fallback every 2.5s
+    pollInterval = setInterval(fetchRTDB, 2500);
+  });
+</script>
+</body>
+</html>
