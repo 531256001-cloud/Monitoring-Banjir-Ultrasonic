@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Waves, CloudCheck, Bell, RefreshCw, User, Radio, Cpu } from 'lucide-react';
-import { AlertLevel } from '@/lib/types';
+import { Waves, Cloud, Bell, RefreshCw, User, Radio, Cpu } from 'lucide-react';
+import { AlertLevel, SystemStats } from '@/lib/types';
 
 interface HeaderProps {
-  connectionStatus: 'STREAMING' | 'POLLING' | 'CONNECTING' | 'ERROR';
+  connectionStatus: SystemStats['connectionStatus'];
   status: AlertLevel;
   selectedPos: string;
   onSelectPos: (pos: string) => void;
@@ -81,11 +81,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Live Firebase RTDB Badge */}
         <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container border border-surface-variant/30">
-          <CloudCheck className={`w-4 h-4 ${connectionStatus === 'ERROR' ? 'text-error' : 'text-secondary'}`} />
+          <Cloud className={`w-4 h-4 ${connectionStatus === 'ERROR' ? 'text-error' : 'text-secondary'}`} />
           <span className="font-mono text-[11px] uppercase text-on-surface-variant">RTDB:</span>
           <span
             className={`font-mono text-[11px] font-bold tracking-wide flex items-center gap-1.5 ${
-              connectionStatus === 'STREAMING'
+              connectionStatus === 'STREAMING' || connectionStatus === 'CONNECTED'
                 ? 'text-secondary'
                 : connectionStatus === 'POLLING'
                 ? 'text-primary'
@@ -96,7 +96,9 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <span
               className={`w-1.5 h-1.5 rounded-full ${
-                connectionStatus === 'STREAMING' || connectionStatus === 'POLLING'
+                connectionStatus === 'STREAMING' ||
+                connectionStatus === 'CONNECTED' ||
+                connectionStatus === 'POLLING'
                   ? 'bg-secondary animate-pulse'
                   : 'bg-outline'
               }`}

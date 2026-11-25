@@ -1,6 +1,6 @@
 export const FIREBASE_CONFIG = {
-  host: 'https://project-despro-2-default-rtdb.asia-southeast1.firebasedatabase.app/',
-  auth: 'stZoWOUZBi8XcGGwSW2HfY6KYxPGWAy7iqrHHLkr',
+  host: process.env.NEXT_PUBLIC_FIREBASE_HOST ?? 'https://project-despro-2-default-rtdb.asia-southeast1.firebasedatabase.app/',
+  auth: process.env.NEXT_PUBLIC_FIREBASE_AUTH ?? 'stZoWOUZBi8XcGGwSW2HfY6KYxPGWAy7iqrHHLkr',
 };
 
 export function getFirebaseUrl(path: string = ''): string {

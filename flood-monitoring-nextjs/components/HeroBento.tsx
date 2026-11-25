@@ -9,7 +9,7 @@ import {
   Droplets,
   CloudRain,
   Clock,
-  SolarPower,
+  Sun,
   Signal,
   RotateCcw,
   Zap,
@@ -320,7 +320,7 @@ export const HeroBento: React.FC<HeroBentoProps> = ({
             <div>
               <div className="flex justify-between font-mono text-xs mb-1">
                 <span className="text-on-surface-variant flex items-center gap-1">
-                  <SolarPower className="w-3.5 h-3.5 text-secondary" /> Solar LiFePO4
+                  <Sun className="w-3.5 h-3.5 text-secondary" /> Solar LiFePO4
                 </span>
                 <span className="text-on-surface">
                   {stats.batteryLevel}% ({stats.batteryVoltage}V)
