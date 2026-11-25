@@ -1,0 +1,11 @@
+{
+  "name": "monitoring-banjir-ultrasonic",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:app": "cd flood-monitoring-nextjs && npm install",
+    "dev": "cd flood-monitoring-nextjs && npm run dev",
+    "build": "cd flood-monitoring-nextjs && npm run build",
+    "start": "cd flood-monitoring-nextjs && npm run start"
+  }
+}
